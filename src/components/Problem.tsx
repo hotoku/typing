@@ -51,7 +51,7 @@ type ProblemProps = {
   level: number;
 };
 
-function Problem({}: ProblemProps): JSX.Element {
+function Problem({ level }: ProblemProps): JSX.Element {
   const [prob, setProb] = useState(problemGenerator());
   const [probHistory, setProbHistory] = useState<string[]>([]);
   const [ansHistory, setAnsHistory] = useState<string[]>([]);
