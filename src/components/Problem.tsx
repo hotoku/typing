@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const red = "#ffeeee";
 const blue = "#aaccff";
 
-const problemGenerator = (() => {
+function problem1(): () => string {
   let last = 0;
   const letters = ["F", "J"];
 
@@ -15,7 +15,18 @@ const problemGenerator = (() => {
     }
     return letters[last];
   };
-})();
+}
+
+function problemGenerator(level: number): () => string {
+  switch (level) {
+    case 1:
+      return problem1();
+    default:
+      new Error("bad level");
+  }
+  new Error("bad level");
+  return problem1(); // この行は不要な気がする
+}
 
 type HistoryProps = {
   vals: string[];
@@ -52,7 +63,8 @@ type ProblemProps = {
 };
 
 function Problem({ level }: ProblemProps): JSX.Element {
-  const [prob, setProb] = useState(problemGenerator());
+  const probGen = problemGenerator(level);
+  const [prob, setProb] = useState(probGen());
   const [probHistory, setProbHistory] = useState<string[]>([]);
   const [ansHistory, setAnsHistory] = useState<string[]>([]);
   const [color, setColor] = useState("");
