@@ -4,38 +4,36 @@ import { useEffect, useState, useMemo } from "react";
 const red = "#ffeeee";
 const blue = "#aaccff";
 
-function problem1(): () => string {
+function randomSample(
+  letters: string[],
+  acceptSameProblem_?: number
+): () => string {
   let last = 0;
-  const letters = ["F", "J"];
-
+  const acceptSameProblem = acceptSameProblem_ ?? 0.8;
   return (): string => {
-    const change = Math.random() > 0.3;
-    if (change) {
-      last = (last + 1) % 2;
+    let n = Math.floor(Math.random() * letters.length);
+    let q = Math.random();
+    while (n === last || q > acceptSameProblem) {
+      n = Math.floor(Math.random() * letters.length);
+      q = Math.random();
     }
+    last = n;
     return letters[last];
   };
 }
 
-function problem2(): () => string {
-  const letters = ["F", "J", "G", "H"];
-  const last = 0;
-  const p = 0.8;
-  return (): string => {
-    let n = Math.floor(Math.random() * letters.length);
-    while (n !== last || Math.random() > p) {
-      n = Math.floor(Math.random() * letters.length);
-    }
-    return letters[n];
-  };
-}
+const problem1 = randomSample("FG".split(""));
+const problem2 = randomSample("FGHJ".split(""));
+const problem3 = randomSample("RTYUFGHJVBNM".split(""));
 
 function problemGenerator(level: number): () => string {
   switch (level) {
     case 1:
-      return problem1();
+      return problem1;
     case 2:
-      return problem2();
+      return problem2;
+    case 2:
+      return problem3;
     default:
       throw new Error("bad level");
   }

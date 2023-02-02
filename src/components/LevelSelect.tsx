@@ -28,6 +28,7 @@ function LevelSelect({
     >
       <MenuItem value={1}>1: F,J</MenuItem>
       <MenuItem value={2}>2: F,G,H,J (人差し指・中段だけ)</MenuItem>
+      <MenuItem value={3}>3: F,G,H,J (人差し指)</MenuItem>
     </Select>
   );
 }
