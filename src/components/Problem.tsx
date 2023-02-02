@@ -23,7 +23,7 @@ function History({ vals }: HistoryProps): JSX.Element {
     <>
       {vals.map((v, i) => {
         return (
-          <div
+          <Card
             key={i}
             style={{
               float: "left",
@@ -33,7 +33,7 @@ function History({ vals }: HistoryProps): JSX.Element {
             }}
           >
             {v}
-          </div>
+          </Card>
         );
       })}
       <div style={{ clear: "left" }} />
@@ -80,7 +80,15 @@ function Problem(): JSX.Element {
 
   return (
     <Paper style={{ padding: "10px" }}>
-      <Card style={{ margin: "0 auto", width: "10em", background: color }}>
+      <Card
+        style={{
+          margin: "10px auto",
+          width: "10em",
+          background: color,
+          border: "solid black",
+          borderWidth: "1px",
+        }}
+      >
         <Typography variant="h1" component="div">
           <Box component="span">{prob}</Box>
         </Typography>
