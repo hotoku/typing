@@ -1,5 +1,5 @@
 import { Box, Card, Paper, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 
 const red = "#ffeeee";
 const blue = "#aaccff";
@@ -17,15 +17,28 @@ function problem1(): () => string {
   };
 }
 
+function problem2(): () => string {
+  const letters = ["F", "J", "G", "H"];
+  const last = 0;
+  const p = 0.8;
+  return (): string => {
+    let n = Math.floor(Math.random() * letters.length);
+    while (n !== last || Math.random() > p) {
+      n = Math.floor(Math.random() * letters.length);
+    }
+    return letters[n];
+  };
+}
+
 function problemGenerator(level: number): () => string {
   switch (level) {
     case 1:
       return problem1();
+    case 2:
+      return problem2();
     default:
-      new Error("bad level");
+      throw new Error("bad level");
   }
-  new Error("bad level");
-  return problem1(); // この行は不要な気がする
 }
 
 type HistoryProps = {
@@ -63,7 +76,8 @@ type ProblemProps = {
 };
 
 function Problem({ level }: ProblemProps): JSX.Element {
-  const probGen = problemGenerator(level);
+  const probGen = useMemo(() => problemGenerator(level), [level]);
+
   const [prob, setProb] = useState(probGen());
   const [probHistory, setProbHistory] = useState<string[]>([]);
   const [ansHistory, setAnsHistory] = useState<string[]>([]);
@@ -85,12 +99,14 @@ function Problem({ level }: ProblemProps): JSX.Element {
     }, 100);
   };
 
+  console.log("prob:", prob);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent): void => {
       const re = /^[A-Z]$/;
       const key = e.key.toUpperCase();
       if (!re.test(key)) return;
-      const nextProb = problemGenerator();
+      const nextProb = probGen();
 
       if (key !== prob) {
         blink(red);
@@ -107,7 +123,7 @@ function Problem({ level }: ProblemProps): JSX.Element {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [prob]);
+  }, [prob, probGen]);
 
   return (
     <Paper style={{ padding: "10px" }}>
