@@ -47,7 +47,11 @@ function History({ vals, ngs }: HistoryProps): JSX.Element {
   );
 }
 
-function Problem(): JSX.Element {
+type ProblemProps = {
+  level: number;
+};
+
+function Problem({}: ProblemProps): JSX.Element {
   const [prob, setProb] = useState(problemGenerator());
   const [probHistory, setProbHistory] = useState<string[]>([]);
   const [ansHistory, setAnsHistory] = useState<string[]>([]);
