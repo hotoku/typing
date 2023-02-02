@@ -23,21 +23,20 @@ function History({ vals }: HistoryProps): JSX.Element {
     <>
       {vals.map((v, i) => {
         return (
-          <div>
-            <div
-              key={i}
-              style={{
-                float: "left",
-                width: "1rem",
-                border: "solid black",
-                borderWidth: "1px",
-              }}
-            >
-              {v}
-            </div>
+          <div
+            key={i}
+            style={{
+              float: "left",
+              width: "1rem",
+              border: "solid black",
+              borderWidth: "1px",
+            }}
+          >
+            {v}
           </div>
         );
       })}
+      <div style={{ clear: "left" }} />
     </>
   );
 }
@@ -57,9 +56,9 @@ function Problem(): JSX.Element {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent): void => {
-      if (e.metaKey) return;
+      const re = /^[A-Z]$/;
       const key = e.key.toUpperCase();
-      const p = prob;
+      if (!re.test(key)) return;
       const nextProb = problemGenerator();
 
       if (key !== prob) {
