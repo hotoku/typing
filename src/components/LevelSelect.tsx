@@ -3,10 +3,14 @@ import { useState } from "react";
 
 type LevelSelectProps = {
   onChange: (n: number) => void;
+  level: number;
 };
 
-function LevelSelect({ onChange }: LevelSelectProps): JSX.Element {
-  const [level, setLevel] = useState<number>(1);
+function LevelSelect({
+  onChange,
+  level: level_,
+}: LevelSelectProps): JSX.Element {
+  const [level, setLevel] = useState<number>(level_);
 
   return (
     <Select
