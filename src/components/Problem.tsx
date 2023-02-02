@@ -99,8 +99,6 @@ function Problem({ level }: ProblemProps): JSX.Element {
     }, 100);
   };
 
-  console.log("prob:", prob);
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent): void => {
       const re = /^[A-Z]$/;
