@@ -1,6 +1,9 @@
 import { Box, Card, Paper, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 
+const red = "#ffeeee";
+const blue = "#aaccff";
+
 const problemGenerator = (() => {
   let last = 0;
   const letters = ["F", "J"];
@@ -16,12 +19,14 @@ const problemGenerator = (() => {
 
 type HistoryProps = {
   vals: string[];
+  ngs?: boolean[];
 };
 
-function History({ vals }: HistoryProps): JSX.Element {
+function History({ vals, ngs }: HistoryProps): JSX.Element {
   return (
     <>
       {vals.map((v, i) => {
+        const color = ngs && ngs[i] ? red : "white";
         return (
           <Card
             key={i}
@@ -30,6 +35,7 @@ function History({ vals }: HistoryProps): JSX.Element {
               width: "1rem",
               border: "solid black",
               borderWidth: "1px",
+              background: color,
             }}
           >
             {v}
@@ -47,6 +53,15 @@ function Problem(): JSX.Element {
   const [ansHistory, setAnsHistory] = useState<string[]>([]);
   const [color, setColor] = useState("");
 
+  if (probHistory.length !== ansHistory.length) {
+    throw new Error("panic");
+  }
+
+  let ngHistory = [] as boolean[];
+  for (let i = 0; i < ansHistory.length; i++) {
+    ngHistory.push(probHistory[i] !== ansHistory[i]);
+  }
+
   const blink = (color: string): void => {
     setColor(color);
     setTimeout(() => {
@@ -62,9 +77,9 @@ function Problem(): JSX.Element {
       const nextProb = problemGenerator();
 
       if (key !== prob) {
-        blink("#ffeeee");
+        blink(red);
       } else {
-        blink("#aaccff");
+        blink(blue);
       }
 
       setProb(() => nextProb);
@@ -94,7 +109,7 @@ function Problem(): JSX.Element {
         </Typography>
       </Card>
       <History vals={probHistory} />
-      <History vals={ansHistory} />
+      <History vals={ansHistory} ngs={ngHistory} />
     </Paper>
   );
 }
