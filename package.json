@@ -20,7 +20,7 @@
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://hotoku.github.io/typing",
+  "homepage": "https://www.hotoku.info/typing",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
@@ -48,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^5.0.0",
     "ts-node": "^10.9.1"
   }
 }
