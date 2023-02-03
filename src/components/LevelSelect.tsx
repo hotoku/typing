@@ -1,5 +1,4 @@
 import { MenuItem, Select } from "@mui/material";
-import { useState } from "react";
 
 type LevelSelectProps = {
   onChange: (n: number) => void;
