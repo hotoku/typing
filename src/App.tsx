@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  useLocation,
-  Routes as Routes_,
-  BrowserRouter,
-} from "react-router-dom";
+import { useLocation, useNavigate, BrowserRouter } from "react-router-dom";
 import "./App.css";
 import LevelSelect from "./components/LevelSelect";
 import Problem from "./components/Problem";
@@ -41,9 +37,14 @@ export const maybeInt = (s: string | undefined): number | undefined => {
 };
 
 function Routes(): JSX.Element {
-  const query = parseQuery(useLocation().search);
-  const [level, setLevel] = useState<number>(maybeInt(query.level) ?? 1);
-  const handleLevelChange = (level: number): void => setLevel(level);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const query = parseQuery(location.search);
+  const level = maybeInt(query.level) ?? 1;
+  const handleLevelChange = (level: number): void => {
+    const url = location.pathname + `?level=${level}`;
+    navigate(url);
+  };
 
   return (
     <div className="App" style={{ padding: "10px" }}>

@@ -13,18 +13,27 @@ function randomSample(
   return (): string => {
     let n = Math.floor(Math.random() * letters.length);
     let q = Math.random();
-    while (n === last || q > acceptSameProblem) {
-      n = Math.floor(Math.random() * letters.length);
-      q = Math.random();
+    while (true) {
+      if (n !== last) {
+        break;
+      } else if (q > acceptSameProblem) {
+        break;
+      } else {
+        n = Math.floor(Math.random() * letters.length);
+        q = Math.random();
+      }
     }
+
     last = n;
     return letters[last];
   };
 }
 
-const problem1 = randomSample("FG".split(""));
+const problem1 = randomSample("FJ".split(""), 0.7);
 const problem2 = randomSample("FGHJ".split(""));
 const problem3 = randomSample("RTYUFGHJVBNM".split(""));
+const problem4 = randomSample("ERTYUIDFGHJKCVBNM".split(""));
+const problem5 = randomSample("QWERTYUIOPASDFGHJKL;ZXCVBNM,./ ".split(""));
 
 function problemGenerator(level: number): () => string {
   switch (level) {
@@ -32,8 +41,12 @@ function problemGenerator(level: number): () => string {
       return problem1;
     case 2:
       return problem2;
-    case 2:
+    case 3:
       return problem3;
+    case 4:
+      return problem4;
+    case 5:
+      return problem5;
     default:
       throw new Error("bad level");
   }
@@ -99,7 +112,7 @@ function Problem({ level }: ProblemProps): JSX.Element {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent): void => {
-      const re = /^[A-Z]$/;
+      const re = /^[A-Z;,\./]$/;
       const key = e.key.toUpperCase();
       if (!re.test(key)) return;
       const nextProb = probGen();
