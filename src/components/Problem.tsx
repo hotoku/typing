@@ -1,4 +1,4 @@
-import { Box, Card, Paper, Typography } from "@mui/material";
+import { Box, Card, Typography } from "@mui/material";
 import { useEffect, useState, useMemo } from "react";
 
 const red = "#ffeeee";
@@ -135,7 +135,7 @@ function Problem({ level }: ProblemProps): JSX.Element {
   }, [prob, probGen]);
 
   return (
-    <Paper style={{ padding: "10px" }}>
+    <div>
       <Card
         style={{
           margin: "10px auto",
@@ -151,7 +151,7 @@ function Problem({ level }: ProblemProps): JSX.Element {
       </Card>
       <History vals={probHistory} />
       <History vals={ansHistory} ngs={ngHistory} />
-    </Paper>
+    </div>
   );
 }
 

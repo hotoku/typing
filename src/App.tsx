@@ -1,3 +1,4 @@
+import { Paper } from "@mui/material";
 import { useState } from "react";
 import { useLocation, useNavigate, BrowserRouter } from "react-router-dom";
 import "./App.css";
@@ -47,9 +48,14 @@ function Routes(): JSX.Element {
   };
 
   return (
-    <div className="App" style={{ padding: "10px" }}>
-      <LevelSelect onChange={handleLevelChange} level={level} />
-      <Problem level={level} />
+    <div
+      className="App"
+      style={{ padding: "10px", background: "#eeeeee", height: "100vh" }}
+    >
+      <Paper style={{ padding: "10px" }}>
+        <LevelSelect onChange={handleLevelChange} level={level} />
+        <Problem level={level} />{" "}
+      </Paper>
     </div>
   );
 }

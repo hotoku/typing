@@ -18,6 +18,7 @@ function LevelSelect({ onChange, level }: LevelSelectProps): JSX.Element {
   return (
     <Select
       value={level}
+      variant="filled"
       onChange={(e) => {
         const v = e.target.value;
         const n = typeof v === "string" ? parseInt(v) : v;
